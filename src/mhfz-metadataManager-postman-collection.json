@@ -1,0 +1,476 @@
+{
+  "info": {
+    "name": "mhfz-metadatamanager-service API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "getDocumentMetadata",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//documentmetadatas/:documentMetadataId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "documentmetadatas",
+            ":documentMetadataId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createDocumentMetadata",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"documentId\": \"ID\",\n  \"typeId\": \"ID\",\n  \"customTypeName\": \"String\",\n  \"metadata\": \"Object\",\n  \"uniqueDocumentIdentifier\": \"String\",\n  \"isEnriched\": \"Boolean\",\n  \"enrichmentStatus\": \"Enum\",\n  \"lastEnrichmentJobId\": \"ID\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//documentmetadatas",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "documentmetadatas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateDocumentMetadata",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"typeId\": \"ID\",\n  \"customTypeName\": \"String\",\n  \"metadata\": \"Object\",\n  \"isEnriched\": \"Boolean\",\n  \"enrichmentStatus\": \"Enum\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//documentmetadatas/:documentMetadataId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "documentmetadatas",
+            ":documentMetadataId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteDocumentMetadata",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//documentmetadatas/:documentMetadataId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "documentmetadatas",
+            ":documentMetadataId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listDocumentMetadata",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//documentmetadata",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "documentmetadata"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getDocumentType",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//documenttypes/:documentTypeId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "documenttypes",
+            ":documentTypeId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createDocumentType",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"typeName\": \"String\",\n  \"description\": \"Text\",\n  \"isSystemType\": \"Boolean\",\n  \"requiredFields\": \"Object\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//documenttypes",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "documenttypes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateDocumentType",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"typeName\": \"String\",\n  \"description\": \"Text\",\n  \"requiredFields\": \"Object\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//documenttypes/:documentTypeId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "documenttypes",
+            ":documentTypeId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteDocumentType",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//documenttypes/:documentTypeId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "documenttypes",
+            ":documentTypeId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listDocumentTypes",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//documenttypes",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "documenttypes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getMetadataEnrichmentJob",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//metadataenrichmentjobs/:metadataEnrichmentJobId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "metadataenrichmentjobs",
+            ":metadataEnrichmentJobId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createMetadataEnrichmentJob",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"documentMetadataId\": \"ID\",\n  \"enrichmentSource\": \"Enum\",\n  \"status\": \"Enum\",\n  \"submittedAt\": \"Date\",\n  \"completedAt\": \"Date\",\n  \"inputMetadataSnapshot\": \"Object\",\n  \"outputEnrichedMetadata\": \"Object\",\n  \"errorDetail\": \"Text\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//metadataenrichmentjobs",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "metadataenrichmentjobs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "updateMetadataEnrichmentJob",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"Enum\",\n  \"completedAt\": \"Date\",\n  \"outputEnrichedMetadata\": \"Object\",\n  \"errorDetail\": \"Text\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{serviceUrl}}//metadataenrichmentjobs/:metadataEnrichmentJobId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "metadataenrichmentjobs",
+            ":metadataEnrichmentJobId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteMetadataEnrichmentJob",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//metadataenrichmentjobs/:metadataEnrichmentJobId",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "metadataenrichmentjobs",
+            ":metadataEnrichmentJobId"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listMetadataEnrichmentJobs",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "ExampleValue",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{serviceUrl}}//metadataenrichmentjobs",
+          "host": [
+            "{{serviceUrl}}"
+          ],
+          "path": [
+            "metadataenrichmentjobs"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
