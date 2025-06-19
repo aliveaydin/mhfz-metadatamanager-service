@@ -14,9 +14,6 @@ DocumentMetadata.prototype.getData = function () {
   data.documentType = this.documentType
     ? this.documentType.getData()
     : undefined;
-  data.lastEnrichmentJob = this.lastEnrichmentJob
-    ? this.lastEnrichmentJob.getData()
-    : undefined;
 
   for (const key of Object.keys(data)) {
     if (key.startsWith("json_")) {
@@ -46,13 +43,6 @@ DocumentMetadata.prototype.getData = function () {
 DocumentMetadata.belongsTo(DocumentType, {
   as: "documentType",
   foreignKey: "typeId",
-  targetKey: "id",
-  constraints: false,
-});
-
-DocumentMetadata.belongsTo(MetadataEnrichmentJob, {
-  as: "lastEnrichmentJob",
-  foreignKey: "lastEnrichmentJobId",
   targetKey: "id",
   constraints: false,
 });

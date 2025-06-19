@@ -203,12 +203,12 @@ On Delete: Set Null
 Required: No
 
 - **lastEnrichmentJobId**: ID
-  Relation to `metadataEnrichmentJob`.id
+  Relation to `metadataenrichmentjob`.id
 
 The target object is a sibling object, meaning that the relation is a many-to-one or one-to-one relationship from this object to the target.
 
 On Delete: Set Null
-Required: No
+Required: Yes
 
 ### Filter Properties
 
