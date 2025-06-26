@@ -64,23 +64,6 @@ describe("createMetadataEnrichmentJob module", () => {
       sinon.assert.notCalled(newUUIDStub); // id was provided
     });
 
-    it("should throw HttpServerError wrapping BadRequestError if input has unexpected field", async () => {
-      const input = { ...{ id: "custom-id" }, foo: "bar" };
-
-      try {
-        await createMetadataEnrichmentJob(input);
-        throw new Error("Expected to throw HttpServerError");
-      } catch (err) {
-        expect(err.name).to.equal("HttpServerError");
-        expect(err.message).to.equal(
-          "errMsg_dbErrorWhenCreatingMetadataEnrichmentJob",
-        );
-        expect(err.details).to.be.instanceOf(Error);
-        expect(err.details.name).to.equal("BadRequestError");
-        expect(err.details.message).to.include('Unexpected field "foo"');
-      }
-    });
-
     it("should throw HttpServerError if MetadataEnrichmentJob.create fails", async () => {
       MetadataEnrichmentJobStub.create.rejects(new Error("DB error"));
       const input = { id: "custom-id" };

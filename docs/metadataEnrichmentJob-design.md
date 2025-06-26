@@ -45,30 +45,18 @@ Since default values are applied on db level, they should be literal values, not
 
 ### Constant Properties
 
+`documentMetadataId` `enrichmentSource` `submittedAt` `inputMetadataSnapshot`
+
 Constant properties are defined to be immutable after creation, meaning they cannot be updated or changed once set. They are typically used for properties that should remain constant throughout the object's lifecycle.
 A property is set to be constant if the `Allow Update` option is set to `false`.
 
-- **documentMetadataId**: ID
-
-- **enrichmentSource**: Enum
-
-- **submittedAt**: Date
-
-- **inputMetadataSnapshot**: Object
-
 ### Auto Update Properties
+
+`status` `completedAt` `outputEnrichedMetadata` `errorDetail`
 
 An update crud route created with the option `Auto Params` enabled will automatically update these properties with the provided values in the request body.
 If you want to update any property in your own business logic not by user input, you can set the `Allow Auto Update` option to false.
 These properties will be added to the update route's body parameters and can be updated by the user if any value is provided in the request body.
-
-- **status**: Enum
-
-- **completedAt**: Date
-
-- **outputEnrichedMetadata**: Object
-
-- **errorDetail**: Text
 
 ### Enum Properties
 
@@ -83,17 +71,14 @@ You can use the index property to sort by the enum value or when your enum optio
 
 ### Elastic Search Indexing
 
-Properties that are indexed in Elastic Search will be searchable via the Elastic Search API. While all properties are stored in the elastic search index of the data object, only those marked for Elastic Search indexing will be available for search queries.
+`documentMetadataId` `enrichmentSource` `status` `submittedAt`
 
-- **documentMetadataId**: ID
-
-- **enrichmentSource**: Enum
-
-- **status**: Enum
-
-- **submittedAt**: Date
+Properties that are indexed in Elastic Search will be searchable via the Elastic Search API.
+While all properties are stored in the elastic search index of the data object, only those marked for Elastic Search indexing will be available for search queries.
 
 ### Relation Properties
+
+`documentMetadataId`
 
 Mindbricks supports relations between data objects, allowing you to define how objects are linked together.
 You can define relations in the data object properties, which will be used to create foreign key constraints in the database.
@@ -109,6 +94,8 @@ On Delete: Set Null
 Required: Yes
 
 ### Filter Properties
+
+`enrichmentSource` `status`
 
 Filter properties are used to define parameters that can be used in query filters, allowing for dynamic data retrieval based on user input or predefined criteria.
 These properties are automatically mapped as route parameters in the listing CRUD routes that have "Auto Params" enabled.

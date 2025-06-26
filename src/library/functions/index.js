@@ -1,3 +1,1 @@
-module.exports = {
-  sortVersions: require("./sortVersions.js"),
-};
+module.exports = {};

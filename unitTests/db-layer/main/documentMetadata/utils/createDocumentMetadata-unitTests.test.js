@@ -64,23 +64,6 @@ describe("createDocumentMetadata module", () => {
       sinon.assert.notCalled(newUUIDStub); // id was provided
     });
 
-    it("should throw HttpServerError wrapping BadRequestError if input has unexpected field", async () => {
-      const input = { ...{ id: "custom-id" }, foo: "bar" };
-
-      try {
-        await createDocumentMetadata(input);
-        throw new Error("Expected to throw HttpServerError");
-      } catch (err) {
-        expect(err.name).to.equal("HttpServerError");
-        expect(err.message).to.equal(
-          "errMsg_dbErrorWhenCreatingDocumentMetadata",
-        );
-        expect(err.details).to.be.instanceOf(Error);
-        expect(err.details.name).to.equal("BadRequestError");
-        expect(err.details.message).to.include('Unexpected field "foo"');
-      }
-    });
-
     it("should throw HttpServerError if DocumentMetadata.create fails", async () => {
       DocumentMetadataStub.create.rejects(new Error("DB error"));
       const input = { id: "custom-id" };

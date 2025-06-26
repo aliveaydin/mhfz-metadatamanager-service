@@ -1,6 +1,7 @@
 # Service Design Specification
 
 **mhfz-metadatamanager-service** documentation
+-Version:**`1.0.0`**
 
 ## Scope
 
@@ -34,9 +35,7 @@ The following routes are available by default:
 - **Current Session Info:** `/currentuser`
 - **Favicon:** `/favicon.ico`
 
-The service uses a **MongoDB** database for data storage, with the database name set to `mhfz-metadatamanager-service`.
-
-Data deletion is managed using a **soft delete** strategy. Instead of removing records from the database, they are flagged as inactive by setting the `isActive` field to `false`.
+The service uses a **PostgreSQL** database for data storage, with the database name set to `mhfz-metadatamanager-service`.
 
 This service is accessible via the following environment-specific URLs:
 
@@ -53,6 +52,10 @@ If a crud route also is configured to require login,
 it will check a valid JWT token in the request query/header/bearer/cookie. If the token is valid, it will extract the user information from the token and make the fetched session data available in the request context.
 
 ### Service Data Objects
+
+The service uses a **PostgreSQL** database for data storage, with the database name set to `mhfz-metadatamanager-service`.
+
+Data deletion is managed using a **soft delete** strategy. Instead of removing records from the database, they are flagged as inactive by setting the `isActive` field to `false`.
 
 | Object Name             | Description                                                                                                                                                                      | Public Access |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
@@ -78,10 +81,14 @@ It is defined using the `ObjectSettings` pattern, which governs its behavior, ac
 
 - **unique_document_documentMetadata**: [documentId]
   This composite index is defined to optimize query performance for complex queries involving multiple fields.
-  The index also defines a conflict resolution strategy for duplicate key violations.
-  When a new record would violate this composite index, the following action will be taken:
-  **On Duplicate**: `throwError`
-  An error will be thrown, preventing the insertion of conflicting data.
+
+The index also defines a conflict resolution strategy for duplicate key violations.
+
+When a new record would violate this composite index, the following action will be taken:
+
+**On Duplicate**: `throwError`
+
+An error will be thrown, preventing the insertion of conflicting data.
 
 ### Properties Schema
 
@@ -107,32 +114,18 @@ Since default values are applied on db level, they should be literal values, not
 
 ### Constant Properties
 
+`documentId` `uniqueDocumentIdentifier` `lastEnrichmentJobId`
+
 Constant properties are defined to be immutable after creation, meaning they cannot be updated or changed once set. They are typically used for properties that should remain constant throughout the object's lifecycle.
 A property is set to be constant if the `Allow Update` option is set to `false`.
 
-- **documentId**: ID
-
-- **uniqueDocumentIdentifier**: String
-
-- **lastEnrichmentJobId**: ID
-
 ### Auto Update Properties
+
+`documentId` `typeId` `customTypeName` `metadata` `isEnriched` `enrichmentStatus`
 
 An update crud route created with the option `Auto Params` enabled will automatically update these properties with the provided values in the request body.
 If you want to update any property in your own business logic not by user input, you can set the `Allow Auto Update` option to false.
 These properties will be added to the update route's body parameters and can be updated by the user if any value is provided in the request body.
-
-- **documentId**: ID
-
-- **typeId**: ID
-
-- **customTypeName**: String
-
-- **metadata**: Object
-
-- **isEnriched**: Boolean
-
-- **enrichmentStatus**: Enum
 
 ### Enum Properties
 
@@ -145,41 +138,28 @@ You can use the index property to sort by the enum value or when your enum optio
 
 ### Elastic Search Indexing
 
-Properties that are indexed in Elastic Search will be searchable via the Elastic Search API. While all properties are stored in the elastic search index of the data object, only those marked for Elastic Search indexing will be available for search queries.
+`documentId` `typeId` `customTypeName` `metadata` `uniqueDocumentIdentifier` `isEnriched` `enrichmentStatus`
 
-- **documentId**: ID
-
-- **typeId**: ID
-
-- **customTypeName**: String
-
-- **metadata**: Object
-
-- **uniqueDocumentIdentifier**: String
-
-- **isEnriched**: Boolean
-
-- **enrichmentStatus**: Enum
+Properties that are indexed in Elastic Search will be searchable via the Elastic Search API.
+While all properties are stored in the elastic search index of the data object, only those marked for Elastic Search indexing will be available for search queries.
 
 ### Database Indexing
+
+`documentId` `uniqueDocumentIdentifier`
 
 Properties that are indexed in the database will be optimized for query performance, allowing for faster data retrieval.
 Make a property indexed in the database if you want to use it frequently in query filters or sorting.
 
-- **documentId**: ID
-
-- **uniqueDocumentIdentifier**: String
-
 ### Unique Properties
+
+`documentId` `uniqueDocumentIdentifier`
 
 Unique properties are enforced to have distinct values across all instances of the data object, preventing duplicate entries.
 Note that a unique property is automatically indexed in the database so you will not need to set the `Indexed in DB` option.
 
-- **documentId**: ID
-
-- **uniqueDocumentIdentifier**: String
-
 ### Relation Properties
+
+`documentId` `typeId` `lastEnrichmentJobId`
 
 Mindbricks supports relations between data objects, allowing you to define how objects are linked together.
 You can define relations in the data object properties, which will be used to create foreign key constraints in the database.
@@ -212,6 +192,8 @@ Required: Yes
 
 ### Filter Properties
 
+`documentId` `typeId` `uniqueDocumentIdentifier` `isEnriched` `enrichmentStatus`
+
 Filter properties are used to define parameters that can be used in query filters, allowing for dynamic data retrieval based on user input or predefined criteria.
 These properties are automatically mapped as route parameters in the listing CRUD routes that have "Auto Params" enabled.
 
@@ -243,10 +225,14 @@ It is defined using the `ObjectSettings` pattern, which governs its behavior, ac
 
 - **unique_typeName_perTenant**: [typeName]
   This composite index is defined to optimize query performance for complex queries involving multiple fields.
-  The index also defines a conflict resolution strategy for duplicate key violations.
-  When a new record would violate this composite index, the following action will be taken:
-  **On Duplicate**: `throwError`
-  An error will be thrown, preventing the insertion of conflicting data.
+
+The index also defines a conflict resolution strategy for duplicate key violations.
+
+When a new record would violate this composite index, the following action will be taken:
+
+**On Duplicate**: `throwError`
+
+An error will be thrown, preventing the insertion of conflicting data.
 
 ### Properties Schema
 
@@ -268,46 +254,43 @@ Since default values are applied on db level, they should be literal values, not
 
 ### Constant Properties
 
+`isSystemType`
+
 Constant properties are defined to be immutable after creation, meaning they cannot be updated or changed once set. They are typically used for properties that should remain constant throughout the object's lifecycle.
 A property is set to be constant if the `Allow Update` option is set to `false`.
 
-- **isSystemType**: Boolean
-
 ### Auto Update Properties
+
+`typeName` `description` `requiredFields`
 
 An update crud route created with the option `Auto Params` enabled will automatically update these properties with the provided values in the request body.
 If you want to update any property in your own business logic not by user input, you can set the `Allow Auto Update` option to false.
 These properties will be added to the update route's body parameters and can be updated by the user if any value is provided in the request body.
 
-- **typeName**: String
-
-- **description**: Text
-
-- **requiredFields**: Object
-
 ### Elastic Search Indexing
 
-Properties that are indexed in Elastic Search will be searchable via the Elastic Search API. While all properties are stored in the elastic search index of the data object, only those marked for Elastic Search indexing will be available for search queries.
+`typeName` `description`
 
-- **typeName**: String
-
-- **description**: Text
+Properties that are indexed in Elastic Search will be searchable via the Elastic Search API.
+While all properties are stored in the elastic search index of the data object, only those marked for Elastic Search indexing will be available for search queries.
 
 ### Database Indexing
+
+`typeName`
 
 Properties that are indexed in the database will be optimized for query performance, allowing for faster data retrieval.
 Make a property indexed in the database if you want to use it frequently in query filters or sorting.
 
-- **typeName**: String
-
 ### Unique Properties
+
+`typeName`
 
 Unique properties are enforced to have distinct values across all instances of the data object, preventing duplicate entries.
 Note that a unique property is automatically indexed in the database so you will not need to set the `Indexed in DB` option.
 
-- **typeName**: String
-
 ### Filter Properties
+
+`typeName` `isSystemType`
 
 Filter properties are used to define parameters that can be used in query filters, allowing for dynamic data retrieval based on user input or predefined criteria.
 These properties are automatically mapped as route parameters in the listing CRUD routes that have "Auto Params" enabled.
@@ -355,30 +338,18 @@ Since default values are applied on db level, they should be literal values, not
 
 ### Constant Properties
 
+`documentMetadataId` `enrichmentSource` `submittedAt` `inputMetadataSnapshot`
+
 Constant properties are defined to be immutable after creation, meaning they cannot be updated or changed once set. They are typically used for properties that should remain constant throughout the object's lifecycle.
 A property is set to be constant if the `Allow Update` option is set to `false`.
 
-- **documentMetadataId**: ID
-
-- **enrichmentSource**: Enum
-
-- **submittedAt**: Date
-
-- **inputMetadataSnapshot**: Object
-
 ### Auto Update Properties
+
+`status` `completedAt` `outputEnrichedMetadata` `errorDetail`
 
 An update crud route created with the option `Auto Params` enabled will automatically update these properties with the provided values in the request body.
 If you want to update any property in your own business logic not by user input, you can set the `Allow Auto Update` option to false.
 These properties will be added to the update route's body parameters and can be updated by the user if any value is provided in the request body.
-
-- **status**: Enum
-
-- **completedAt**: Date
-
-- **outputEnrichedMetadata**: Object
-
-- **errorDetail**: Text
 
 ### Enum Properties
 
@@ -393,17 +364,14 @@ You can use the index property to sort by the enum value or when your enum optio
 
 ### Elastic Search Indexing
 
-Properties that are indexed in Elastic Search will be searchable via the Elastic Search API. While all properties are stored in the elastic search index of the data object, only those marked for Elastic Search indexing will be available for search queries.
+`documentMetadataId` `enrichmentSource` `status` `submittedAt`
 
-- **documentMetadataId**: ID
-
-- **enrichmentSource**: Enum
-
-- **status**: Enum
-
-- **submittedAt**: Date
+Properties that are indexed in Elastic Search will be searchable via the Elastic Search API.
+While all properties are stored in the elastic search index of the data object, only those marked for Elastic Search indexing will be available for search queries.
 
 ### Relation Properties
+
+`documentMetadataId`
 
 Mindbricks supports relations between data objects, allowing you to define how objects are linked together.
 You can define relations in the data object properties, which will be used to create foreign key constraints in the database.
@@ -419,6 +387,8 @@ On Delete: Set Null
 Required: Yes
 
 ### Filter Properties
+
+`enrichmentSource` `status`
 
 Filter properties are used to define parameters that can be used in query filters, allowing for dynamic data retrieval based on user input or predefined criteria.
 These properties are automatically mapped as route parameters in the listing CRUD routes that have "Auto Params" enabled.
@@ -447,7 +417,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -469,7 +439,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -491,7 +461,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -513,7 +483,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -535,7 +505,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -559,7 +529,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -581,7 +551,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -603,7 +573,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -625,7 +595,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -647,7 +617,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -671,7 +641,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -693,7 +663,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -715,7 +685,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -737,7 +707,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
@@ -759,7 +729,7 @@ These properties are automatically mapped as route parameters in the listing CRU
 
 **Controller Types:**
 
-- **REST**: Auto-generated path
+- **REST**: $default
 
 ---
 
